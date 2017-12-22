@@ -3,13 +3,11 @@ import { View, TouchableOpacity, Text, StyleSheet, Platform } from 'react-native
 import { white } from '../utils/colors'
 
 
-export default function DeckSummary({name}) {
+export default function DeckSummary({ name, number }) {
     return(
         <View style={styles.item}>
             <Text>{name}</Text>
-            <Text>{name}</Text>
-            <Text>{name}</Text>
-            <Text>{name}</Text>
+            <Text>{number}</Text>
         </View>
     )
 }
@@ -22,7 +20,9 @@ const styles = StyleSheet.create({
         marginLeft: 10,
         marginRight: 10,
         marginTop: 17,
-        justifyContent: 'center',
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between',
         shadowRadius: 3,
         shadowOpacity: 0.8,
         shadowColor: 'rgba(0,0,0,0.24)',

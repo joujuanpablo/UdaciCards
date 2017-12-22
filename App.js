@@ -1,9 +1,10 @@
-import React from 'react'
+import React, { Component } from 'react'
 import { createStore } from 'redux'
 import { Provider } from 'react-redux'
 import { StyleSheet, Text, View, Platform, FlatList, StatusBar} from 'react-native'
 import { TabNavigator, StackNavigator } from 'react-navigation'
 import { Constants } from 'expo'
+import reducer from './reducers'
 import { white, gray, purple } from './utils/colors'
 import { Ionicons, FontAwesome } from '@expo/vector-icons'
 import OurStatusBar from './components/OurStatusBar'
@@ -14,14 +15,14 @@ const Tabs = TabNavigator ({
   DeckList: {
     screen: DeckList,
     navigationOptions: {
-      tabBarLable: 'Decks',
+      tabBarLabel: 'Decks List',
       tabBarIcon: ({tintColor}) => <Ionicons name='ios-speedometer' size={30} color={tintColor}/>
     }
   },
   NewDeck: {
     screen: NewDeck,
     navigationOptions: {
-      tabBarLable: 'Decks',
+      tabBarLabel: 'New Deck',
       tabBarIcon: ({tintColor}) => <FontAwesome name='plus-square' size={30} color={tintColor}/>
     }
   }
@@ -45,13 +46,15 @@ const Tabs = TabNavigator ({
   }
 })
 
-export default class App extends React.Component {
+export default class App extends Component {
   render() {
     return (
-      <View style={styles.container}>
-        <OurStatusBar backgroundColor={purple} barStyle='light-content'/>
-        <Tabs/>
-      </View>
+      <Provider store={createStore(reducer)}>
+        <View style={styles.container}>
+          <OurStatusBar backgroundColor={purple} barStyle='light-content'/>
+          <Tabs/>
+        </View>
+      </Provider>
     );
   }
 }
