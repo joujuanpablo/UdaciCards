@@ -1,15 +1,26 @@
-import React from 'react'
+import React, { Component } from 'react'
 import { View, TouchableOpacity, Text, StyleSheet, Platform } from 'react-native'
 import { white } from '../utils/colors'
 
 
-export default function DeckSummary({ name, number }) {
-    return(
-        <View style={styles.item}>
-            <Text>{name}</Text>
-            <Text>{number}</Text>
-        </View>
-    )
+class DeckSummary extends Component {
+    render() {
+        const { name, questions } = this.props
+        const number = questions.length
+        return(
+            <TouchableOpacity style={styles.item} onPress={() => this.props.navigation.navigate(
+                'DeckDetails',
+                { 
+                    name,
+                    number,
+                    questions,
+                }
+            )}>
+                <Text>{name}</Text>
+                <Text>cards: {number}</Text>
+            </TouchableOpacity>
+        )
+    }
 }
 
 const styles = StyleSheet.create({
@@ -32,3 +43,5 @@ const styles = StyleSheet.create({
         }
     },
 })
+
+export default DeckSummary

@@ -10,6 +10,8 @@ import { Ionicons, FontAwesome } from '@expo/vector-icons'
 import OurStatusBar from './components/OurStatusBar'
 import DeckList from './components/DeckList'
 import NewDeck from './components/NewDeck'
+import DeckDetails from './components/DeckDetails'
+import Quiz from './components/Quiz'
 
 const Tabs = TabNavigator ({
   DeckList: {
@@ -46,13 +48,38 @@ const Tabs = TabNavigator ({
   }
 })
 
+const MainNavigator = StackNavigator({
+  Home: {
+    screen: Tabs,
+  },
+  DeckDetails: {
+    screen: DeckDetails,
+    navigationOptions: {
+      headerTintColor: white,
+      headerStyle: {
+        backgroundColor: purple,
+      }
+    }
+  },
+  Quiz: {
+    screen: Quiz,
+    navigationOptions: {
+      headerTintColor: white,
+      headerStyle: {
+        backgroundColor: purple,
+      }
+    }  
+
+  }, 
+})
+
 export default class App extends Component {
   render() {
     return (
       <Provider store={createStore(reducer)}>
         <View style={styles.container}>
           <OurStatusBar backgroundColor={purple} barStyle='light-content'/>
-          <Tabs/>
+          <MainNavigator/>
         </View>
       </Provider>
     );

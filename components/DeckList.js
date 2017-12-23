@@ -6,14 +6,11 @@ import DeckSummary from './DeckSummary'
 import { fetchDecks } from '../utils/api'
 import { receiveDecks } from '../actions'
 
-const sampleArray = [{name:'alpha'}, {name:'bravo'}, {name:'charlie'}, {name:'delta'}, {name: 'echo'}, {name: 'foxtrot'}, {name: 'golf'}]
-
-
 class DeckList extends Component {
 
     state = {}
     renderItem = ({ item }) => {
-       return <DeckSummary name={item.title} number={item.questions} key={item.name}/>
+       return <DeckSummary navigation={this.props.navigation} name={item.title} questions={item.questions} key={item.title}/>
     }
 
     componentDidMount() {
@@ -27,22 +24,22 @@ class DeckList extends Component {
         return(
             <View style={{flex:1}}>
                 <Text>DeckList</Text>
-                <FlatList data={this.props.justDecks} renderItem={this.renderItem} keyExtractor={(item, index) => index} />
+                <FlatList data={this.props.decksArray} renderItem={this.renderItem} keyExtractor={(item, index) => index} />
             </View>
         )
     }
 }
 
 function mapStateToProps(decks) {
-    const justDecks = Object.keys(decks).map((key) => {
+    const decksArray = Object.keys(decks).map((key) => {
         const { questions, title } = decks[key]
         return {
                 title,
-                questions: questions.length
+                questions
         }
     })
     return {
-        justDecks,
+        decksArray,
     }
 }
 
