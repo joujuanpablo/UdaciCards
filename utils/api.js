@@ -10,12 +10,10 @@ function setData(sampleDecks) {
 
 function returnData(results) {
     const resultsObject = JSON.parse(results)
-    console.log('resultsObject', typeof resultsObject)
     return resultsObject
 }
 
 export function fetchDecks() {
-
     const sampleDecks = getSampleDecks()
 
     return AsyncStorage.getItem(UDACICARDS_STORAGE_KEY)

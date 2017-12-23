@@ -8,7 +8,6 @@ import { receiveDecks } from '../actions'
 import { white, gray } from '../utils/colors'
 
 class DeckList extends Component {
-
     state = {}
     renderItem = ({ item }) => {
        return <DeckSummary navigation={this.props.navigation} name={item.title} questions={item.questions} key={item.title}/>
@@ -17,7 +16,6 @@ class DeckList extends Component {
     componentDidMount() {
         fetchDecks()
         .then((resultsObject) => {
-            console.log('compo did mount', typeof resultsObject)
             this.props.receiveDecks(resultsObject)
         })
     }
@@ -28,6 +26,7 @@ class DeckList extends Component {
                     <Text style={styles.header}>My Decks</Text>
                 </View>
                 <FlatList data={this.props.decksArray} renderItem={this.renderItem} keyExtractor={(item, index) => index} />
+                <Text>{JSON.stringify(this.props)}</Text>
             </View>
         )
     }
