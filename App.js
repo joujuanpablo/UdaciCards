@@ -12,6 +12,7 @@ import DeckList from './components/DeckList'
 import NewDeck from './components/NewDeck'
 import DeckDetails from './components/DeckDetails'
 import Quiz from './components/Quiz'
+import NewCard from './components/NewCard'
 
 const Tabs = TabNavigator ({
   DeckList: {
@@ -27,7 +28,7 @@ const Tabs = TabNavigator ({
       tabBarLabel: 'New Deck',
       tabBarIcon: ({tintColor}) => <FontAwesome name='plus-square' size={30} color={tintColor}/>
     }
-  }
+  },
 }, {
   navigationOptions: {
     header: null,
@@ -70,7 +71,16 @@ const MainNavigator = StackNavigator({
       }
     }  
 
-  }, 
+  },
+  NewCard: {
+    screen: NewCard,
+    navigationOptions: {
+      headerTintColor: white,
+      headerStyle: {
+        backgroundColor: purple,
+      }
+    }
+  } 
 })
 
 export default class App extends Component {

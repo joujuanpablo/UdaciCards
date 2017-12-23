@@ -39,7 +39,15 @@ class DeckDetails extends Component {
                             Start Quiz
                         </Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={Platform.OS === 'ios' ? styles.iosButton : styles.androidButton}>
+                    <TouchableOpacity 
+                    style={Platform.OS === 'ios' ? styles.iosButton : styles.androidButton}
+                    onPress={() => this.props.navigation.navigate(
+                        'NewCard',
+                        {
+                            name,
+                            questions,
+                        }
+                    )}>
                         <Text style={styles.submitBtnText}>
                             Add Card
                         </Text>
