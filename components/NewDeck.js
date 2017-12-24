@@ -4,6 +4,7 @@ import { NavigationActions } from 'react-navigation'
 import { View, Text, StyleSheet, TextInput, Platform, Keyboard, TouchableWithoutFeedback, TouchableOpacity } from 'react-native'
 import { lightGray, gray, white, purple } from '../utils/colors'
 import { createDeck } from '../actions'
+import { submitNewDeck } from '../utils/api'
 
 class NewDeck extends Component {
     state = {
@@ -11,12 +12,13 @@ class NewDeck extends Component {
     }
    submit = () => {
        const { deckTitle } = this.state
-        console.log('the deck', deckTitle)
-        this.props.addDeck(deckTitle)
         alert(`${deckTitle} has been created`)
-        this.props.navigation.dispatch(NavigationActions.back({
-            key: 'NewDeck',
-        }))
+        submitNewDeck(deckTitle).then(
+            this.props.addDeck(deckTitle),
+            this.props.navigation.dispatch(NavigationActions.back({
+                key: 'NewDeck',
+            }))
+        )
         //go back to the previous page
     }
     handleInput(text) {

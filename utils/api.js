@@ -23,6 +23,15 @@ export function fetchDecks() {
                     : returnData(results)
         })
 }
+
+export function submitNewDeck(title) {
+    return AsyncStorage.mergeItem(UDACICARDS_STORAGE_KEY, JSON.stringify({
+        [title]: {
+            title: title,
+            questions:[]
+        }
+    }))
+}
 //getDeck(id)
     //getitem
 //saveDeckTitle(title)

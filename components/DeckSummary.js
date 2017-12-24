@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { View, TouchableOpacity, Text, StyleSheet, Platform } from 'react-native'
-import { white } from '../utils/colors'
+import { white, purple } from '../utils/colors'
 
 
 class DeckSummary extends Component {
@@ -16,7 +16,7 @@ class DeckSummary extends Component {
                     questions,
                 }
             )}>
-                <Text>{name}</Text>
+                <Text style={{color: purple, fontWeight: 'bold'}}>{name}</Text>
                 <Text>cards: {number}</Text>
             </TouchableOpacity>
         )

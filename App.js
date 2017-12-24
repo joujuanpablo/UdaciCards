@@ -13,13 +13,14 @@ import NewDeck from './components/NewDeck'
 import DeckDetails from './components/DeckDetails'
 import Quiz from './components/Quiz'
 import NewCard from './components/NewCard'
+import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 
 const Tabs = TabNavigator ({
   DeckList: {
     screen: DeckList,
     navigationOptions: {
-      tabBarLabel: 'Decks List',
-      tabBarIcon: ({tintColor}) => <Ionicons name='ios-speedometer' size={30} color={tintColor}/>
+      tabBarLabel: 'My Decks',
+      tabBarIcon: ({tintColor}) => <MaterialCommunityIcons name={Platform.OS === 'ios' && 'cards-outline'} size={30} color={tintColor}/>
     }
   },
   NewDeck: {
