@@ -1,4 +1,4 @@
-import { RECEIVE_DECKS, CREATE_DECK } from '../actions'
+import { RECEIVE_DECKS, CREATE_DECK, CREATE_CARD } from '../actions'
 const initialState = {}
 
 function decks (state = initialState, action) {
@@ -8,16 +8,35 @@ function decks (state = initialState, action) {
                 ...state,
                 ...action.payload,
             }
+
         case CREATE_DECK:
-        var key = action.payload
-        var obj = {}
-        obj[key]= {
-            title: key,
-            questions: []
-        }
+            var key = action.payload
+            var obj = {}
+            obj[key]= {
+                title: key,
+                questions: []
+            }
             return {
                 ...state,
                 ...obj
+            }
+        case CREATE_CARD:
+            const { deckName, question, answer } = action.payload 
+            const existingQuestions = state[deckName].questions
+            const existingDeck = state[deckName]
+            return {
+                ...state,
+                [deckName]: {
+                    ...existingDeck,
+                    questions: [
+                        ...existingQuestions,
+                        { 
+                            answer,
+                            question,
+                            
+                        }
+                    ]
+                }
             }
         default:
             return initialState

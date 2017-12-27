@@ -19,8 +19,8 @@ export function fetchDecks() {
     return AsyncStorage.getItem(UDACICARDS_STORAGE_KEY)
         .then((results) => {
             return results === null
-                    ? setData(sampleDecks)
-                    : returnData(results)
+                ? setData(sampleDecks)
+                : returnData(results)
         })
 }
 
@@ -28,9 +28,34 @@ export function submitNewDeck(title) {
     return AsyncStorage.mergeItem(UDACICARDS_STORAGE_KEY, JSON.stringify({
         [title]: {
             title: title,
-            questions:[]
+            questions: []
         }
     }))
+}
+export function submitNewCard(card) {
+    const { deckName, question, answer } = card
+    console.log('in the api', deckName, question, answer)
+
+    return AsyncStorage.getItem(UDACICARDS_STORAGE_KEY)
+        .then(results => {
+            var theData = JSON.parse(results)
+            var existingDeck = theData[deckName]
+            var existingQuestions = existingDeck['questions']
+            return existingQuestions
+        }).then(existingQuestions => {
+            return AsyncStorage.mergeItem(UDACICARDS_STORAGE_KEY, JSON.stringify({
+                [deckName]: {
+                    ...[deckName],
+                    ['questions']: [
+                        ...existingQuestions,
+                        {
+                            answer,
+                            question,
+                        }
+                    ]
+                }
+            }))
+        })
 }
 //getDeck(id)
     //getitem

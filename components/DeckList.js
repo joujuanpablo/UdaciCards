@@ -1,14 +1,16 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { View, Text, FlatList, StyleSheet, Platform} from 'react-native'
+import { View, Text, FlatList, StyleSheet, Platform, TouchableOpacity} from 'react-native'
 import { getSampleDecks } from '../utils/sampleData'
 import DeckSummary from './DeckSummary'
 import { fetchDecks } from '../utils/api'
 import { receiveDecks } from '../actions'
-import { white, gray } from '../utils/colors'
+import { white, gray, blue } from '../utils/colors'
 
 class DeckList extends Component {
-    state = {}
+    state = {
+        editMode: false,
+    }
     renderItem = ({ item }) => {
        return <DeckSummary navigation={this.props.navigation} name={item.title} questions={item.questions} key={item.title}/>
     }
@@ -19,14 +21,37 @@ class DeckList extends Component {
             this.props.receiveDecks(resultsObject)
         })
     }
+    toggleEditMode = () => {
+        this.setState({
+            editMode: !this.state.editMode,
+        })
+    }
+
     render() {
         return(
             <View style={{flex:1}}>
                 <View style={[styles.headerContainer, Platform.OS === 'ios' ? styles.headerContainerIos : null]}>
                     <Text style={styles.header}>My Decks</Text>
+                    <View style={this.state.editMode ? {display: 'none'} : {display: 'flex'}}>
+                        <TouchableOpacity
+                        onPress={this.toggleEditMode} 
+                        style={styles.editBnt}>
+                        <Text style={{color: blue}}>
+                                Edit
+                            </Text>
+                        </TouchableOpacity>                    
+                    </View>
+                    <View style={this.state.editMode ? {display: 'flex'} : {display: 'none'}}>
+                        <TouchableOpacity
+                            onPress={this.toggleEditMode} 
+                            style={styles.editBnt}>
+                            <Text style={{color: blue}}>
+                                Done
+                            </Text>
+                        </TouchableOpacity>
+                    </View>
                 </View>
                 <FlatList data={this.props.decksArray} renderItem={this.renderItem} keyExtractor={(item, index) => index} />
-                <Text>{JSON.stringify(this.props)}</Text>
             </View>
         )
     }
@@ -46,9 +71,13 @@ const styles = StyleSheet.create({
             height: 3,
         }
     },
+    editBnt: {
+        alignSelf: 'flex-end',
+        marginRight: 20,
+        marginBottom: 10,
+    },
     header: {
         marginTop: 20,
-        marginBottom: 20,
         fontSize: 20,
         textAlign: 'center',
     },

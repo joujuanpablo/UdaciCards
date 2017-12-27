@@ -1,10 +1,11 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
 import { View, Text, StyleSheet, TouchableOpacity, Platform } from 'react-native'
 import { purple, white } from '../utils/colors'
 
 class DeckDetails extends Component {
     state = {
-        name: '',
+        title: '',
         questions: [],
     }
     static navigationOptions = ({navigation}) => {
@@ -13,17 +14,24 @@ class DeckDetails extends Component {
         }
     }
     componentDidMount() {
-        const {name, questions} = this.props.navigation.state.params
+        const {title, questions} = this.props
         this.setState({
-            name,
+            title,
             questions,
         })
     }
+    componentWillReceiveProps (nextProps) {
+        if (nextProps.questions !== this.props.questions) {
+          this.setState({
+            questions: nextProps.questions,
+          })
+        }
+      }
     render() {
-        const {name, questions} = this.state
+        const {title, questions} = this.state
         return (
             <View style={styles.container}>
-                <Text>{name}</Text>
+                <Text style={{fontWeight: 'bold'}}>{title}</Text>
                 <Text>{questions.length} cards</Text>
                 <View style={Platform.OS === 'android' ? styles.btnContainer : null}>
                     <TouchableOpacity 
@@ -31,7 +39,7 @@ class DeckDetails extends Component {
                     onPress={() => this.props.navigation.navigate(
                         'Quiz',
                         {
-                            name,
+                            title,
                             questions,
                         }
                     )}>
@@ -44,7 +52,7 @@ class DeckDetails extends Component {
                     onPress={() => this.props.navigation.navigate(
                         'NewCard',
                         {
-                            name,
+                            title,
                             questions,
                         }
                     )}>
@@ -53,6 +61,7 @@ class DeckDetails extends Component {
                         </Text>
                     </TouchableOpacity>
                 </View>
+                <Text>{JSON.stringify(this.props)}</Text>
             </View>
         )
     }
@@ -63,7 +72,10 @@ const styles = StyleSheet.create({
        flex: 1,
        flexDirection: 'column',
        alignItems: 'center',
-       justifyContent: 'center'
+       justifyContent: 'center',
+       margin: 40,
+       backgroundColor: white,
+       borderRadius: Platform.OS === 'ios' ? 15 : 5,
    },
    btnContainer: {
        flexDirection: 'row',
@@ -98,4 +110,11 @@ const styles = StyleSheet.create({
 
 })
 
-export default DeckDetails
+function mapStateToProps(decks, { navigation }) {
+    const deckName = navigation.state.params.name
+    const ourDeck = decks[deckName]
+
+    return ourDeck
+}
+
+export default connect(mapStateToProps, null)(DeckDetails)

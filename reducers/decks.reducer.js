@@ -6,7 +6,6 @@ const initialState = {
 export default (state = initialState, action) => {
     switch(action.type) {
         case RECEIVE_DECKS:
-        console.log('action payload', action.payload)
             return {
                 ...state,
                 ...action.payload,

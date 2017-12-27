@@ -46,9 +46,6 @@ class NewDeck extends Component {
                             disabled={this.state.deckTitle.length < 1}>
                                 <Text style={styles.submitBtnText}>Submit</Text>
                         </TouchableOpacity> 
-                        <Text>{this.state.deckTitle.length}</Text> 
-                        <Text>{JSON.stringify(this.state)}</Text>                
-                        <Text>{JSON.stringify(this.props)}</Text>                
                     </View>
             </TouchableWithoutFeedback>
         )
