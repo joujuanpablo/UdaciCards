@@ -61,7 +61,6 @@ class DeckDetails extends Component {
                         </Text>
                     </TouchableOpacity>
                 </View>
-                <Text>{JSON.stringify(this.props)}</Text>
             </View>
         )
     }
@@ -104,7 +103,7 @@ const styles = StyleSheet.create({
   },
   submitBtnText: {
         color: white,
-        fontSize: 22,
+        fontSize: 18,
         textAlign: 'center',
   },
 
