@@ -1,5 +1,5 @@
 import { AsyncStorage } from 'react-native'
-import { getSampleDecks } from '../utils/sampleData'
+import { getSampleDecks } from './sampleData'
 
 export const UDACICARDS_STORAGE_KEY = 'UdaciCards:decks'
 
