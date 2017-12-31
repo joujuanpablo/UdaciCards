@@ -15,17 +15,12 @@ class NewDeck extends Component {
         alert(`${deckTitle} has been created`)
         submitNewDeck(deckTitle).then(
             this.props.addDeck(deckTitle),
-            this.props.navigation.dispatch(NavigationActions.back({
-                key: 'NewDeck',
-            }))
+            this.props.navigation.navigate('DeckDetails', {name: deckTitle})
         )
-        //go back to the previous page
     }
     handleInput(text) {
         this.setState({ deckTitle: text })
     }
-    
-    //disable button until there is text in the state.
     render() {
         return(
             <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>

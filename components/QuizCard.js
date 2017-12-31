@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, Text, TouchableOpacity, StyleSheet, Platform } from 'react-native'
+import { View, Text, TouchableOpacity, StyleSheet, Platform, Animated } from 'react-native'
 import { FontAwesome } from '@expo/vector-icons'
 import { white, purple, red, green } from '../utils/colors'
 
@@ -8,6 +8,9 @@ class QuizCard extends Component {
         answerVisible: false,
         cardIndex: 1,
         score: 0,
+        opacity: new Animated.Value(0),
+        width: new Animated.Value(0),
+        height: new Animated.Value(0)
     }
     componentDidMount() {
         if (this.props.navigation.state.params) {
@@ -19,7 +22,12 @@ class QuizCard extends Component {
         }
     }
     showAnswer = () => {
+        const { opacity, width, height } = this.state
         this.setState({answerVisible: true})
+        Animated.timing( opacity, { toValue: 1, duration: 1000})
+            .start()
+        Animated.spring( height, {toValue: 60, speed: 2}).start()
+        Animated.spring( width, {toValue: 60, speed: 2}).start()
     }
     markCorrect = () => {
         newScore = this.state.score + 1
@@ -41,7 +49,7 @@ class QuizCard extends Component {
         }
     }
     render() {
-        const { cardIndex, answerVisible } = this.state
+        const { cardIndex, answerVisible, opacity, width, height } = this.state
         const { questions, numberOfCards } = this.props.screenProps
         const question = questions[cardIndex - 1]
         return(
@@ -60,20 +68,24 @@ class QuizCard extends Component {
                         </TouchableOpacity>
                     </View>
                     <View style={[answerVisible ? styles.show : styles.hide]}>
-                        <Text style={styles.answerText}>{question.answer}</Text>
-                        <View style={styles.buttonContainer}>
-                            <TouchableOpacity 
-                            style={[styles.resultButton, {borderColor: green}]}
-                            onPress={this.markCorrect}
-                            >
-                                <FontAwesome name='check' color={green} size={30}/>
-                            </TouchableOpacity>
-                            <TouchableOpacity 
-                            style={[styles.resultButton, {borderColor: red}]}
-                            onPress={this.markIncorrect}
-                            >
-                                <FontAwesome name='remove' color={red} size={30}/>
-                            </TouchableOpacity>
+                        <Animated.Text style={[styles.answerText, {opacity}]}>{question.answer}</Animated.Text>
+                        <View style={[styles.buttonContainer]}>
+                            <Animated.View style={{height, width, opacity}}>
+                                <TouchableOpacity 
+                                style={[styles.resultButton, {borderColor: green}]}
+                                onPress={this.markCorrect}
+                                >
+                                    <FontAwesome name='check' color={green} size={30}/>
+                                </TouchableOpacity>
+                            </Animated.View>
+                            <Animated.View style={{height, width, opacity}}>
+                                <TouchableOpacity 
+                                style={[styles.resultButton, {borderColor: red}]}
+                                onPress={this.markIncorrect}
+                                >
+                                    <FontAwesome name='remove' color={red} size={30}/>
+                                </TouchableOpacity>
+                            </Animated.View>
                         </View>
                     </View>
                 </View>
@@ -148,12 +160,12 @@ const styles = StyleSheet.create({
   resultButton: {
       borderWidth: 4,
       borderRadius: 30,
-      height: 50,
-      width: 50,
       justifyContent: 'center',
       alignItems: 'center',
       margin: 10,
       marginTop: 0,
+      width: 50,
+      height: 50,
   },
   buttonContainer: {
       flexDirection: 'row',
