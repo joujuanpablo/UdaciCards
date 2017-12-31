@@ -63,8 +63,7 @@ class NewDeck extends Component {
                             >
                            <Text style={styles.submitBtnText}>Submit</Text> 
                         </TouchableOpacity> 
-                        <Text style={[styles.helperText ,(this.state.question.length < 1 || this.state.answer.length < 1) ? {display:'flex'} : {display: 'none'}]}>you must enter both a question and an answer to submit</Text>                 
-                        <Text>{JSON.stringify(this.props)}</Text>                   
+                        <Text style={[styles.helperText ,(this.state.question.length < 1 || this.state.answer.length < 1) ? {display:'flex'} : {display: 'none'}]}>you must enter both a question and an answer to submit</Text>                  
                     </View>
             </TouchableWithoutFeedback>
         )

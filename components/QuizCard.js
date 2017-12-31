@@ -42,11 +42,12 @@ class QuizCard extends Component {
     }
     render() {
         const { cardIndex, answerVisible } = this.state
-        const question = this.props.screenProps.questions[cardIndex - 1]
+        const { questions, numberOfCards } = this.props.screenProps
+        const question = questions[cardIndex - 1]
         return(
             <View style={styles.container}>
                 <View style={[styles.pagination]}>
-                    <Text style={styles.paginationText}>{cardIndex}/{this.props.screenProps.numberOfCards}</Text>
+                    <Text style={styles.paginationText}>{cardIndex}/{numberOfCards}</Text>
                 </View>
                 <View style={styles.cardBody}>
                     <View>

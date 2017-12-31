@@ -12,11 +12,11 @@ class DeckSummary extends Component {
         return(
             <View style={{flexDirection: 'row'}}>
                 <TouchableOpacity style={styles.item} onPress={() => this.props.navigation.navigate(
-                    'DeckDetails',
-                    { 
-                        name
-                    }
-                )}>
+                        'DeckDetails',
+                        { 
+                            name
+                        }
+                    )}>
                     <Text style={{color: purple, fontWeight: 'bold'}}>{name}</Text>
                     <Text>cards: {number}</Text>
                 </TouchableOpacity>

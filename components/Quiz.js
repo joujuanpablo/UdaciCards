@@ -19,10 +19,10 @@ const QuizStack = StackNavigator({
 
 class Quiz extends Component {
     render() {
-        const { questions} = this.props.navigation.state.params
+        const { title, questions} = this.props.navigation.state.params
         return (
             <View style={{flex: 1}}>
-                <QuizStack screenProps={{questions, numberOfCards: questions.length, cardIndex: 1}}/>
+                <QuizStack screenProps={{questions, numberOfCards: questions.length, cardIndex: 1, deckName: title}}/>
             </View>
 
         )
