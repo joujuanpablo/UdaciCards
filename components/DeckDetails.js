@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { View, Text, StyleSheet, TouchableOpacity, Platform } from 'react-native'
-import { purple, white } from '../utils/colors'
+import { purple, white, lightGray, gray } from '../utils/colors'
 
 class DeckDetails extends Component {
     state = {
@@ -34,8 +34,9 @@ class DeckDetails extends Component {
                 <Text style={{fontWeight: 'bold'}}>{title}</Text>
                 <Text>{questions.length} cards</Text>
                 <View style={Platform.OS === 'android' ? styles.btnContainer : null}>
-                    <TouchableOpacity 
-                    style={Platform.OS === 'ios' ? styles.iosButton : styles.androidButton}
+                    <TouchableOpacity
+                    disabled={questions.length === 0} 
+                    style={[Platform.OS === 'ios' ? styles.iosButton : styles.androidButton, questions.length === 0 && styles.disabled]}
                     onPress={() => this.props.navigation.navigate(
                         'Quiz',
                         {
@@ -47,6 +48,10 @@ class DeckDetails extends Component {
                             Start Quiz
                         </Text>
                     </TouchableOpacity>
+                    <Text 
+                        style={[styles.helperText, questions.length === 0 ? {display: 'flex'} : {display: 'none'}]}>
+                            You must add at least one card to this deck to take the quiz
+                    </Text>
                     <TouchableOpacity 
                     style={Platform.OS === 'ios' ? styles.iosButton : styles.androidButton}
                     onPress={() => this.props.navigation.navigate(
@@ -105,6 +110,16 @@ const styles = StyleSheet.create({
         color: white,
         fontSize: 18,
         textAlign: 'center',
+  },
+  disabled: {
+    backgroundColor: lightGray,
+  },
+  helperText: {
+    fontSize: 10,
+    color: gray,
+    marginLeft: 40,
+    marginRight: 40,
+    marginTop: 10,
   },
 
 })
