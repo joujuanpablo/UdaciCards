@@ -61,7 +61,7 @@ const styles = StyleSheet.create({
         alignSelf: 'flex-end',
         justifyContent: 'center',
         alignItems: 'center',
-        marginTop: 20,
+        marginTop: 60,
   },
   buttonText: {
     color: white,

@@ -57,8 +57,8 @@ class QuizCard extends Component {
                 <View style={[styles.pagination]}>
                     <Text style={styles.paginationText}>{cardIndex}/{numberOfCards}</Text>
                 </View>
-                <View style={styles.cardBody}>
-                    <View>
+                <View style={styles.questionBox}>
+                    <View style={styles.questionBox}>
                         <Text style={{textAlign: 'center'}}>{question.question}</Text>
                         <TouchableOpacity 
                         style={[Platform.OS === 'ios' ? styles.iosButton : styles.androidButton, answerVisible ? {display: 'none'} : {display: 'flex'}]}
@@ -121,7 +121,10 @@ const styles = StyleSheet.create({
         color: purple
     },
     cardBody: {
-        
+        flex: 1,
+    },
+    questionBox: {
+        width: '100%',
     },
     iosButton: {
         backgroundColor: purple,
@@ -145,7 +148,7 @@ const styles = StyleSheet.create({
         alignSelf: 'flex-end',
         justifyContent: 'center',
         alignItems: 'center',
-        marginTop: 20,
+        marginTop: 60,
   },
   buttonText: {
     color: white,

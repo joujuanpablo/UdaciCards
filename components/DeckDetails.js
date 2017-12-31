@@ -34,6 +34,10 @@ class DeckDetails extends Component {
                 <Text style={{fontWeight: 'bold'}}>{title}</Text>
                 <Text>{questions.length} cards</Text>
                 <View style={Platform.OS === 'android' ? styles.btnContainer : null}>
+                    <Text 
+                        style={[styles.helperText, questions.length === 0 ? {display: 'flex'} : {display: 'none'}]}>
+                            You must add at least one card to this deck to take the quiz
+                    </Text>
                     <TouchableOpacity
                     disabled={questions.length === 0} 
                     style={[Platform.OS === 'ios' ? styles.iosButton : styles.androidButton, questions.length === 0 && styles.disabled]}
@@ -48,10 +52,6 @@ class DeckDetails extends Component {
                             Start Quiz
                         </Text>
                     </TouchableOpacity>
-                    <Text 
-                        style={[styles.helperText, questions.length === 0 ? {display: 'flex'} : {display: 'none'}]}>
-                            You must add at least one card to this deck to take the quiz
-                    </Text>
                     <TouchableOpacity 
                     style={Platform.OS === 'ios' ? styles.iosButton : styles.androidButton}
                     onPress={() => this.props.navigation.navigate(
@@ -80,9 +80,10 @@ const styles = StyleSheet.create({
        margin: 40,
        backgroundColor: white,
        borderRadius: Platform.OS === 'ios' ? 15 : 5,
+       padding: 20,
    },
    btnContainer: {
-       flexDirection: 'row',
+       flexDirection: 'column',
        justifyContent: 'center'
    },
    iosButton: {
