@@ -1,29 +1,32 @@
 import { AsyncStorage } from 'react-native'
 import { getSampleDecks } from './sampleData'
 
-export const UDACICARDS_STORAGE_KEY = 'UdaciCards:decks'
+export const UDACICARDS_STORAGE_KEY = 'UdaciCards:mobileDecks'
 
+//save sample data to device memory, then return it
 function setData(sampleDecks) {
     AsyncStorage.setItem(UDACICARDS_STORAGE_KEY, JSON.stringify(sampleDecks))
     return sampleDecks
 }
-
+//return existing data 
 function returnData(results) {
     const resultsObject = JSON.parse(results)
     return resultsObject
 }
 
-export function fetchDecks() {
-    const sampleDecks = getSampleDecks()
+export function fetchDecks() { 
+    const sampleDecks = getSampleDecks() //sample decks object from sampleData file
 
-    return AsyncStorage.getItem(UDACICARDS_STORAGE_KEY)
+    //see if there already is data (decks) in the app, 
+    //if there is then use that data, otherwise use the sample data from sampleData
+    return AsyncStorage.getItem(UDACICARDS_STORAGE_KEY) 
         .then((results) => {
-            return results === null
+            return results === null 
                 ? setData(sampleDecks)
                 : returnData(results)
         })
 }
-
+//Add new deck to device memory
 export function submitNewDeck(title) {
     return AsyncStorage.mergeItem(UDACICARDS_STORAGE_KEY, JSON.stringify({
         [title]: {
@@ -32,17 +35,17 @@ export function submitNewDeck(title) {
         }
     }))
 }
+// Add new card to existing deck on device memory
 export function submitNewCard(card) {
     const { deckName, question, answer } = card
-    console.log('in the api', deckName, question, answer)
 
-    return AsyncStorage.getItem(UDACICARDS_STORAGE_KEY)
+    return AsyncStorage.getItem(UDACICARDS_STORAGE_KEY) //get the questions array for that deck
         .then(results => {
             var theData = JSON.parse(results)
             var existingDeck = theData[deckName]
             var existingQuestions = existingDeck['questions']
             return existingQuestions
-        }).then(existingQuestions => {
+        }).then(existingQuestions => { //merge in the new question
             return AsyncStorage.mergeItem(UDACICARDS_STORAGE_KEY, JSON.stringify({
                 [deckName]: {
                     ...[deckName],

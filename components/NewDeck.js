@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { NavigationActions } from 'react-navigation'
 import { View, Text, StyleSheet, TextInput, Platform, Keyboard, TouchableWithoutFeedback, TouchableOpacity } from 'react-native'
 import { lightGray, gray, white, purple } from '../utils/colors'
-import { createDeck } from '../actions'
+import { createDeck } from '../actions/actions'
 import { submitNewDeck } from '../utils/api'
 
 class NewDeck extends Component {

@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { View, Text, StyleSheet, TouchableOpacity, Platform } from 'react-native'
 import { purple, white, lightGray, gray } from '../utils/colors'
+import TextButton from './TextButton'
+
 
 class DeckDetails extends Component {
     state = {
@@ -27,6 +29,9 @@ class DeckDetails extends Component {
           })
         }
       }
+    goHome = () => {
+        this.props.navigation.navigate('DeckList')
+    }
     render() {
         const {title, questions} = this.state
         return (
@@ -65,6 +70,9 @@ class DeckDetails extends Component {
                             Add Card
                         </Text>
                     </TouchableOpacity>
+                    <TextButton style={{marginTop: 40}} onPress={this.goHome}>
+                        Home
+                    </TextButton>
                 </View>
             </View>
         )
@@ -125,7 +133,7 @@ const styles = StyleSheet.create({
 
 })
 
-function mapStateToProps(decks, { navigation }) {
+function mapStateToProps({ decks }, { navigation }) {
     const deckName = navigation.state.params.name
     const ourDeck = decks[deckName]
 

@@ -1,4 +1,4 @@
-export const RECEIVE_DECKS = 'RECEIVE_DECKS'
+import { RECEIVE_DECKS, CREATE_DECK } from './types'
 
 export function receiveDecks(decks) {
     return {
@@ -6,3 +6,9 @@ export function receiveDecks(decks) {
         payload: decks
     }
 }
+export function createDeck(title) {
+    return {
+        type: CREATE_DECK,
+        payload: title
+    }
+} 

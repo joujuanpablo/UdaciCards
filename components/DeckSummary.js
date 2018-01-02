@@ -6,9 +6,25 @@ import { white, purple, red } from '../utils/colors'
 
 
 class DeckSummary extends Component {
-    render() {
+    state = {
+        name: '',
+        questions: [],
+        editMode: false,
+    }
+    componentDidMount() {
         const { name, questions, editMode } = this.props
-        const number = questions.length
+        this.setState({name, questions, editMode})
+    }
+    componentWillReceiveProps (nextProps) {
+        if (nextProps.questions !== this.props.questions) {
+          this.setState({
+            questions: nextProps.questions,
+          })
+        }
+      }
+    render() {
+        const { name, questions, editMode } = this.state
+        const numberOfQuestions = questions.length
         return(
             <View style={{flexDirection: 'row'}}>
                 <TouchableOpacity style={styles.item} onPress={() => this.props.navigation.navigate(
@@ -18,9 +34,9 @@ class DeckSummary extends Component {
                         }
                     )}>
                     <Text style={{color: purple, fontWeight: 'bold'}}>{name}</Text>
-                    <Text>cards: {number}</Text>
+                    <Text>cards: {numberOfQuestions}</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={[styles.deleteBtn, this.props.editMode ? {display:'flex'} : {display: 'none'} ]}>
+                <TouchableOpacity style={[styles.deleteBtn, editMode ? {display:'flex'} : {display: 'none'} ]}>
                     <MaterialIcons name='delete' color={red} size={30}/>
                 </TouchableOpacity>
             </View>
@@ -56,7 +72,7 @@ const styles = StyleSheet.create({
     },
 })
 
-function mapStateToProps(decks) {
+function mapStateToProps({ decks }) {
     return decks
 }
 

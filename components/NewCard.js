@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import { NavigationActions } from 'react-navigation'
 import { submitNewCard } from '../utils/api'
 import { gray, white, purple, lightGray } from '../utils/colors'
-import { createCard } from '../actions'
+import { createCard } from '../actions/actions'
 
 class NewDeck extends Component {
     state= {
@@ -129,7 +129,6 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
 })
-
 
 function mapDispatchToProps(dispatch) {
 

@@ -4,8 +4,9 @@ import { View, Text, FlatList, StyleSheet, Platform, TouchableOpacity} from 'rea
 import { getSampleDecks } from '../utils/sampleData'
 import DeckSummary from './DeckSummary'
 import { fetchDecks } from '../utils/api'
-import { receiveDecks } from '../actions'
-import { white, gray, blue } from '../utils/colors'
+import { receiveDecks } from '../actions/actions'
+import { white, gray, blue, purple } from '../utils/colors'
+import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons'
 
 class DeckList extends Component {
     state = {
@@ -13,27 +14,42 @@ class DeckList extends Component {
         decksArray: [],
     }
     componentDidMount() {
-        fetchDecks()
+        fetchDecks() //Returns either the sample decks object or the data stored in the device
         .then((resultsObject) => {
-            this.props.receiveDecks(resultsObject)
-        }).then(() => this.setState({
-            decksArray: this.props.decksArray
-        }))
+            this.props.receiveDecks(resultsObject) //Sends the data to the store
+        }).then(() =>  this.setState({
+                decksArray: this.props.decksArray
+            })) 
+        
     }
+    componentWillReceiveProps (nextProps) {
+        if (nextProps.decksArray !== this.props.decksArray) {
+          this.setState({
+            decksArray: nextProps.decksArray,
+          })
+        }
+      }
     toggleEditMode = () => {
         this.setState({
-            editMode: !this.state.editMode,
+            editMode: !this.state.editMode, //work remains to show the delete buttons
         })
     }
     renderItem = ({ item }) => {
-        return <DeckSummary navigation={this.props.navigation} name={item.title} questions={item.questions} key={item.title}/>
+        return <DeckSummary 
+                navigation={this.props.navigation} 
+                name={item.title} 
+                questions={item.questions} 
+                key={item.title}/>
      }
 
     render() {
         return(
             <View style={{flex:1}}>
                 <View style={[styles.headerContainer, Platform.OS === 'ios' ? styles.headerContainerIos : null]}>
-                    <Text style={styles.header}>My Decks</Text>
+                    <Text style={styles.header}>
+                        <MaterialCommunityIcons name={'cards-outline'} size={30} color={purple}/> 
+                        My Decks
+                    </Text>
                     <View style={this.state.editMode ? {display: 'none'} : {display: 'flex'}}>
                         <TouchableOpacity
                         onPress={this.toggleEditMode} 
@@ -53,7 +69,10 @@ class DeckList extends Component {
                         </TouchableOpacity>
                     </View>
                 </View>
-                <FlatList data={this.state.decksArray} renderItem={this.renderItem} keyExtractor={(item, index) => index} />
+                <FlatList 
+                data={this.state.decksArray} 
+                renderItem={this.renderItem} 
+                keyExtractor={(item, index) => index} />
             </View>
         )
     }
@@ -82,10 +101,11 @@ const styles = StyleSheet.create({
         marginTop: 20,
         fontSize: 20,
         textAlign: 'center',
+        color: purple
     },
 })
 
-function mapStateToProps(decks) {
+function mapStateToProps({ decks }) {
     const decksArray = Object.keys(decks).map((key) => {
         const { questions, title } = decks[key]
         return {

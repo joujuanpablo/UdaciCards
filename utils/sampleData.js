@@ -1,6 +1,4 @@
-import { AsyncStorage } from 'react-native'
-import { UDACICARDS_STORAGE_KEY } from './api'
-//Decks
+//Returns the sample decks object
 export function getSampleDecks() {
     return {
         React: {
